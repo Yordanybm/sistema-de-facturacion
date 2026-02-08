@@ -1,0 +1,45 @@
+:root {
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --primary: #2752e7;
+  --text: #1f2937;
+}
+* { box-sizing: border-box; font-family: Arial, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--text); }
+.layout { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 240px; background: #0f172a; color: white; padding: 20px; display: flex; flex-direction: column; gap: 10px;
+}
+.sidebar h1 { font-size: 1.2rem; margin-bottom: 20px; }
+.nav-btn {
+  border: 0; padding: 10px; border-radius: 8px; text-align: left; cursor: pointer; background: #1e293b; color: #dbeafe;
+}
+.nav-btn.active, .nav-btn:hover { background: var(--primary); color: white; }
+.content { flex: 1; padding: 24px; }
+.view { display: none; }
+.view.active { display: block; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 14px; }
+.stats-grid article { background: var(--card); padding: 16px; border-radius: 12px; box-shadow: 0 6px 14px rgba(0,0,0,.05); }
+.stats-grid p { font-size: 1.4rem; font-weight: bold; margin: 8px 0 0; }
+.card-form, .invoice-controls, .invoice-add-row, .history-filters {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 10px; background: var(--card); padding: 14px; border-radius: 12px; margin-bottom: 14px;
+}
+input, select, button { padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; }
+button { cursor: pointer; background: #e2e8f0; }
+button.primary { background: var(--primary); border-color: var(--primary); color: white; }
+.search-input { width: 100%; margin-bottom: 10px; }
+.table-wrap { overflow-x: auto; background: var(--card); border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+.totals { background: var(--card); padding: 12px; border-radius: 12px; margin-bottom: 10px; }
+.action-btn { margin-right: 6px; }
+#toast {
+  position: fixed; right: 16px; bottom: 16px; background: #0f172a; color: white; padding: 10px 14px; border-radius: 8px; opacity: 0; transition: .2s;
+}
+#toast.show { opacity: 1; }
+
+@media (max-width: 900px) {
+  .layout { flex-direction: column; }
+  .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+  .sidebar h1 { display: none; }
+}
