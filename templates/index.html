@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Facturación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <h1>Facturación Pro</h1>
+            <button data-view="dashboard" class="nav-btn active">Dashboard</button>
+            <button data-view="clients" class="nav-btn">Clientes</button>
+            <button data-view="products" class="nav-btn">Productos</button>
+            <button data-view="invoice" class="nav-btn">Nueva Factura</button>
+            <button data-view="history" class="nav-btn">Historial</button>
+        </aside>
+
+        <main class="content">
+            <section id="dashboard" class="view active">
+                <h2>Resumen General</h2>
+                <div class="stats-grid">
+                    <article><h3>Clientes</h3><p id="stat-clients">0</p></article>
+                    <article><h3>Productos</h3><p id="stat-products">0</p></article>
+                    <article><h3>Facturas</h3><p id="stat-invoices">0</p></article>
+                    <article><h3>Ventas Totales</h3><p id="stat-sales">RD$ 0.00</p></article>
+                </div>
+            </section>
+
+            <section id="clients" class="view">
+                <h2>Gestión de Clientes</h2>
+                <form id="client-form" class="card-form">
+                    <input type="hidden" id="client-id" />
+                    <input type="text" id="client-name" placeholder="Nombre" required />
+                    <input type="email" id="client-email" placeholder="Email" />
+                    <input type="text" id="client-phone" placeholder="Teléfono" />
+                    <input type="text" id="client-address" placeholder="Dirección" />
+                    <button type="submit">Guardar Cliente</button>
+                </form>
+                <input type="text" id="search-clients" placeholder="Buscar cliente..." class="search-input" />
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Acciones</th></tr></thead>
+                        <tbody id="clients-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="products" class="view">
+                <h2>Gestión de Productos</h2>
+                <form id="product-form" class="card-form">
+                    <input type="hidden" id="product-id" />
+                    <input type="text" id="product-name" placeholder="Producto" required />
+                    <input type="number" id="product-price" step="0.01" min="0" placeholder="Precio" required />
+                    <input type="number" id="product-stock" min="0" placeholder="Stock" required />
+                    <button type="submit">Guardar Producto</button>
+                </form>
+                <input type="text" id="search-products" placeholder="Buscar producto..." class="search-input" />
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Acciones</th></tr></thead>
+                        <tbody id="products-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="invoice" class="view">
+                <h2>Nueva Factura</h2>
+                <div class="invoice-controls">
+                    <select id="invoice-client"></select>
+                    <select id="invoice-payment">
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Transferencia">Transferencia</option>
+                        <option value="Tarjeta">Tarjeta</option>
+                    </select>
+                </div>
+
+                <div class="invoice-add-row">
+                    <select id="invoice-product"></select>
+                    <input type="number" id="invoice-qty" min="1" value="1" />
+                    <button id="add-item">Agregar Producto</button>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Total</th><th></th></tr></thead>
+                        <tbody id="invoice-items"></tbody>
+                    </table>
+                </div>
+
+                <div class="totals">
+                    <p>Subtotal: <strong id="subtotal">RD$ 0.00</strong></p>
+                    <p>ITBIS (18%): <strong id="itbis">RD$ 0.00</strong></p>
+                    <p>Total: <strong id="total">RD$ 0.00</strong></p>
+                </div>
+
+                <button id="create-invoice" class="primary">Generar Factura</button>
+            </section>
+
+            <section id="history" class="view">
+                <h2>Historial de Facturas</h2>
+                <div class="history-filters">
+                    <input type="date" id="filter-date" />
+                    <input type="text" id="filter-client" placeholder="Filtrar por cliente" />
+                    <button id="apply-filters">Aplicar filtros</button>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Factura</th><th>Cliente</th><th>Fecha</th><th>Total</th><th>Acciones</th></tr></thead>
+                        <tbody id="history-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div id="toast"></div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
